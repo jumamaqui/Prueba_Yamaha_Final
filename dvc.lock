@@ -1,0 +1,62 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/Data.xlsx
+      hash: md5
+      md5: f060b31d8bc6be773e756ab6c3962e41
+      size: 46409
+    - path: src/prepare.py
+      hash: md5
+      md5: 757a64e9abd7ab7944472d6c051aeef3
+      size: 2054
+    params:
+      params.yaml:
+        prepare.imputation_strategy:
+          ventas: 0
+          promo: 0
+          precio: linear
+    outs:
+    - path: data/prepared_data.csv
+      hash: md5
+      md5: b27ac37211c11c9f46ce6d8fe8463fd4
+      size: 44516
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/prepared_data.csv
+      hash: md5
+      md5: b27ac37211c11c9f46ce6d8fe8463fd4
+      size: 44516
+    - path: src/train.py
+      hash: md5
+      md5: 791e294d8d78bbb7a9e5ac6f578e8da4
+      size: 733
+    params:
+      params.yaml:
+        train.criterion: squared_error
+        train.max_depth: 10
+        train.min_samples_split: 2
+        train.n_estimators: 100
+    outs:
+    - path: model.pkl
+      hash: md5
+      md5: 81a53bb61d0b6af410b0c7802254eb38
+      size: 3141778
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/prepared_data.csv
+      hash: md5
+      md5: b27ac37211c11c9f46ce6d8fe8463fd4
+      size: 44516
+    - path: model.pkl
+      hash: md5
+      md5: 81a53bb61d0b6af410b0c7802254eb38
+      size: 3141778
+    outs:
+    - path: metrics/scores.json
+      hash: md5
+      md5: 760c236c50962c6662230bdc819956ab
+      size: 76

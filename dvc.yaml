@@ -5,7 +5,7 @@ stages:
       - data/Data.xlsx
       - src/prepare.py
     params:
-      - prepare.impute_values
+      - prepare.imputation_strategy
     outs:
       - data/prepared_data.csv
   train:
