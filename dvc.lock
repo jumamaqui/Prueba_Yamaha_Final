@@ -38,12 +38,12 @@ stages:
         train.criterion: squared_error
         train.max_depth: 10
         train.min_samples_split: 2
-        train.n_estimators: 100
+        train.n_estimators: 200
     outs:
     - path: model.pkl
       hash: md5
-      md5: 81a53bb61d0b6af410b0c7802254eb38
-      size: 3141778
+      md5: a78c39d6260f917b3ea6ae49c92bbb15
+      size: 6306226
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -53,10 +53,10 @@ stages:
       size: 44516
     - path: model.pkl
       hash: md5
-      md5: 81a53bb61d0b6af410b0c7802254eb38
-      size: 3141778
+      md5: a78c39d6260f917b3ea6ae49c92bbb15
+      size: 6306226
     outs:
     - path: metrics/scores.json
       hash: md5
-      md5: 760c236c50962c6662230bdc819956ab
-      size: 76
+      md5: 8d69fde0d28212855ac2cfbb49ceaabd
+      size: 79
