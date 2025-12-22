@@ -1,0 +1,30 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+      - data/Data.xlsx
+      - src/prepare.py
+    params:
+      - prepare.impute_values
+    outs:
+      - data/prepared_data.csv
+  train:
+    cmd: python src/train.py
+    deps:
+      - data/prepared_data.csv
+      - src/train.py
+    params:
+      - train.n_estimators
+      - train.max_depth
+      - train.min_samples_split
+      - train.criterion
+    outs:
+      - model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - model.pkl
+      - data/prepared_data.csv
+    metrics:
+      - metrics/scores.json:
+          cache: false

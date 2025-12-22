@@ -1,0 +1,30 @@
+# Configuración general del proyecto
+base:
+  project: pronostico-ventas-yamaha
+  random_state: 42
+
+# Parámetros para la etapa de Preparación de Datos (prepare.py)
+prepare:
+  test_size: 0.2
+  imputation_strategy:
+    ventas: 0
+    promo: 0
+    precio: "linear"
+  features:
+    - Promo
+    - Precio_Unitario
+    - dia_semana
+    - mes
+train:
+  model_type: "RandomForestRegressor"
+  n_estimators: 100
+  max_depth: 10
+  min_samples_split: 2
+  criterion: "squared_error"
+
+evaluate:
+  metrics:
+    - mae
+    - rmse
+    - r2
+  round_decimals: 4
